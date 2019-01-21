@@ -173,7 +173,6 @@ class _MyHomePageState extends State<MyHomePage> {
       weekFormat: false,
       markedDatesMap: _markedDateMap,
       height: 420.0,
-      selectedDateTime: _currentDate2,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
       markedDateShowIcon: true,
       markedDateIconMaxShown: 2,
@@ -183,14 +182,12 @@ class _MyHomePageState extends State<MyHomePage> {
       markedDateIconBuilder: (event) {
         return event.icon;
       },
-      minSelectedDate: _currentDate,
-      maxSelectedDate: _currentDate.add(Duration(days: 60)),
-//      inactiveDateColor: Colors.black12,
       onCalendarChanged: (DateTime date) {
         this.setState(() => _currentMonth = DateFormat.yMMM().format(date));
       },
       startDate: new DateTime(2019,1,11),
       badDates: new HashSet.from([DateTime(2019,1,15)]),
+      endDate: new DateTime(2019,1,18),
     );
 
     return new Scaffold(
