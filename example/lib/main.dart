@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
@@ -187,6 +189,8 @@ class _MyHomePageState extends State<MyHomePage> {
       onCalendarChanged: (DateTime date) {
         this.setState(() => _currentMonth = DateFormat.yMMM().format(date));
       },
+      startDate: new DateTime(2019,1,11),
+      badDates: new HashSet.from([DateTime(2019,1,15)]),
     );
 
     return new Scaffold(
