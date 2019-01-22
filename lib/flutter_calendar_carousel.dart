@@ -251,6 +251,10 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
     _setDate();
   }
 
+  updateBadDates(badDates) {
+    setState(() => _badDates = badDates);
+  }
+
   @override
   dispose() {
     _controller.dispose();
