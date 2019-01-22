@@ -197,7 +197,7 @@ class CalendarCarousel<T> extends StatefulWidget {
   });
 
   @override
-  _CalendarState<T> createState() => _CalendarState<T>();
+  CalendarState<T> createState() => CalendarState<T>();
 }
 
 enum WeekdayFormat {
@@ -209,7 +209,7 @@ enum WeekdayFormat {
   standaloneNarrow,
 }
 
-class _CalendarState<T> extends State<CalendarCarousel<T>> {
+class CalendarState<T> extends State<CalendarCarousel<T>> {
   PageController _controller;
   List<DateTime> _dates = List(3);
   List<List<DateTime>> _weeks = List(3);
