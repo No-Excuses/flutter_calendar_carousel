@@ -132,6 +132,7 @@ class CalendarCarousel<T> extends StatefulWidget {
   final DateTime endDate;
 
   CalendarCarousel({
+    Key key,
     this.viewportFraction = 1.0,
     this.prevDaysTextStyle,
     this.daysTextStyle,
@@ -194,7 +195,7 @@ class CalendarCarousel<T> extends StatefulWidget {
     this.badDates,
     this.startDate,
     this.endDate,
-  });
+  }) : super(key: key);
 
   @override
   CalendarState<T> createState() => CalendarState<T>();
