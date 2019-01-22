@@ -149,8 +149,8 @@ class CalendarCarousel<T> extends StatefulWidget {
     this.todayButtonColor = Colors.blue,
     this.selectedDateTime,
     this.selectedDayTextStyle,
-    this.selectedDayBorderColor = Colors.green,
-    this.selectedDayButtonColor = Colors.green,
+    this.selectedDayBorderColor = Colors.blue,
+    this.selectedDayButtonColor = Colors.blue,
     this.daysHaveCircularBorder,
     this.onDayPressed,
     this.weekdayTextStyle,
@@ -219,7 +219,8 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
   int _endWeekday = 0;
   DateFormat _localeDate;
   HashSet<DateTime> _badDates = new HashSet<DateTime>();
-  DateTime _endDate = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime _endDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   /// When FIRSTDAYOFWEEK is 0 in dart-intl, it represents Monday. However it is the second day in the arrays of Weekdays.
   /// Therefore we need to add 1 modulo 7 to pick the right weekday from intl. (cf. [GlobalMaterialLocalizations])
@@ -449,16 +450,16 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
                   return Container(
                     margin: EdgeInsets.all(widget.dayPadding),
                     child: FlatButton(
-                      color: isBadDay
-                          ? widget.badButtonColor
-                          : isToday && widget.todayButtonColor != null
-                          ? widget.todayButtonColor
+                      color: isSelectedDay &&
+                              widget.selectedDayButtonColor != null
+                          ? widget.selectedDayButtonColor
                           : isGoodDay
                               ? widget.goodButtonColor
-                              : isSelectedDay &&
-                                      widget.selectedDayButtonColor != null
-                                  ? widget.selectedDayButtonColor
-                                  : widget.dayButtonColor,
+                              : isBadDay
+                                  ? widget.badButtonColor
+                                  : isToday && widget.todayButtonColor != null
+                                      ? widget.todayButtonColor
+                                      : widget.dayButtonColor,
                       onPressed: () => _onDayPressed(now),
                       padding: EdgeInsets.all(widget.dayPadding),
                       shape: widget.daysHaveCircularBorder == null
@@ -466,24 +467,23 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
                           : widget.daysHaveCircularBorder
                               ? CircleBorder(
                                   side: BorderSide(
-                                    color: isBadDay
-                                        ? widget.badBorderColor
-                                        : isToday &&
-                                        widget.todayBorderColor !=
-                                            null
-                                        ? widget
-                                        .todayBorderColor
+                                    color: isSelectedDay
+                                        ? widget.selectedDayBorderColor
                                         : isGoodDay
                                             ? widget.goodBorderColor
-                                            : isSelectedDay
-                                                ? widget.selectedDayBorderColor
-                                                : isPrevMonthDay
-                                                    ? widget
-                                                        .prevMonthDayBorderColor
-                                                    : isNextMonthDay
+                                            : isBadDay
+                                                ? widget.badBorderColor
+                                                : isToday &&
+                                                        widget.todayBorderColor !=
+                                                            null
+                                                    ? widget.todayBorderColor
+                                                    : isPrevMonthDay
                                                         ? widget
-                                                            .nextMonthDayBorderColor
-                                                        : widget
+                                                            .prevMonthDayBorderColor
+                                                        : isNextMonthDay
+                                                            ? widget
+                                                                .nextMonthDayBorderColor
+                                                            : widget
                                                                 .thisMonthDayBorderColor,
                                   ),
                                 )
