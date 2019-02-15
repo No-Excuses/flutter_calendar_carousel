@@ -2,8 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-    show CalendarCarousel;
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -88,7 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
     },
   );
 
-  CalendarCarousel _calendarCarousel, _calendarCarouselNoHeader;
+  CalendarCarousel _calendarCarousel, _calendarCarouselNoHeader, _calendarCarouselGroupedDates;
+  final GlobalKey<CalendarState> _calendarKey = new GlobalKey<CalendarState>();
+  final GlobalKey<CalendarState> _calendarKey2 = new GlobalKey<CalendarState>();
 
   @override
   void initState() {
@@ -164,16 +165,23 @@ class _MyHomePageState extends State<MyHomePage> {
     _calendarCarouselNoHeader = CalendarCarousel<Event>(
       onDayPressed: (DateTime date, List<Event> events) {
         this.setState(() => _currentDate2 = date);
-        events.forEach((event) => print(event.title));
       },
-      weekendTextStyle: TextStyle(
-        color: Colors.red,
-      ),
+      weekendTextStyle: TextStyle(color: Colors.black),
       thisMonthDayBorderColor: Colors.grey,
       weekFormat: false,
-      markedDatesMap: _markedDateMap,
-      height: 420.0,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
+      height: MediaQuery.of(context).size.width * 1.12,
+      width: MediaQuery.of(context).size.width,
+      weekdayTextStyle: TextStyle(
+        color: Color(0xff3d9970),
+        fontWeight: FontWeight.bold,
+      ),
+      daysHaveCircularBorder: true,
+      todayButtonColor: null,
+      todayBorderColor: null,
+      todayTextStyle: TextStyle(color: Colors.black),
+      selectedDateTime: _currentDate2,
+      markedDatesMap: _markedDateMap,
       markedDateShowIcon: true,
       markedDateIconMaxShown: 2,
       markedDateMoreShowTotal:
@@ -182,12 +190,45 @@ class _MyHomePageState extends State<MyHomePage> {
       markedDateIconBuilder: (event) {
         return event.icon;
       },
-      onCalendarChanged: (DateTime date) {
-        this.setState(() => _currentMonth = DateFormat.yMMM().format(date));
+      startDate: new DateTime(2019,1,11),
+      badDates: new HashSet.from([DateTime(2019,1,15)]),
+      endDate: new DateTime(2019,2,18),
+      key: _calendarKey,
+    );
+
+    _calendarCarouselGroupedDates = CalendarCarousel<Event>(
+      onDayPressed: (DateTime date, List<Event> events) {
+        this.setState(() => _currentDate2 = date);
+      },
+      weekendTextStyle: TextStyle(color: Colors.black),
+      weekFormat: false,
+      customGridViewPhysics: NeverScrollableScrollPhysics(),
+      height: MediaQuery.of(context).size.width * 1.12,
+      width: MediaQuery.of(context).size.width,
+      weekdayTextStyle: TextStyle(
+        color: Color(0xff3d9970),
+        fontWeight: FontWeight.bold,
+      ),
+      todayButtonColor: null,
+      todayBorderColor: null,
+      todayTextStyle: TextStyle(color: Colors.black),
+      markedDatesMap: _markedDateMap,
+      markedDateShowIcon: true,
+      markedDateIconMaxShown: 2,
+      markedDateMoreShowTotal:
+      false, // null for not showing hidden events indicator
+      markedDateIconBuilder: (event) {
+        return event.icon;
       },
       startDate: new DateTime(2019,1,11),
       badDates: new HashSet.from([DateTime(2019,1,15)]),
-      endDate: new DateTime(2019,1,18),
+      pendingDates: new HashSet.from([DateTime(2019,2,16), DateTime(2019,2,17), DateTime(2019,2,18), DateTime(2019,2,19), DateTime(2019,2,20), DateTime(2019,2,21), DateTime(2019,2,22)]),
+      endDate: new DateTime(2019,2,22),
+      key: _calendarKey2,
+      daysHaveCircularBorder: false,
+      onlyVerticalDayPadding: true,
+      leftCurveDates: new HashSet.from([DateTime(2019,1,12), DateTime(2019,1,19), DateTime(2019,1,26), DateTime(2019,2,2), DateTime(2019,2,9), DateTime(2019,2,16)]),
+      rightCurveDates: new HashSet.from([DateTime(2019,1,18), DateTime(2019,1,25), DateTime(2019,1,32), DateTime(2019,2,8), DateTime(2019,2,15), DateTime(2019,2,22)]),
     );
 
     return new Scaffold(
@@ -251,6 +292,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 margin: EdgeInsets.symmetric(horizontal: 16.0),
                 child: _calendarCarouselNoHeader,
               ), //
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.0),
+                child: _calendarCarouselGroupedDates,
+              ),
             ],
           ),
         ));
