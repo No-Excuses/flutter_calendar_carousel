@@ -433,16 +433,16 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
                       (DateTime(year, month + 1, 0).day) + _startWeekday;
                   bool isThisMonthDay = !isPrevMonthDay && !isNextMonthDay;
                   bool isGoodDay = widget.startDate != null &&
-                      widget.startDate.compareTo(indexDate) < 0 &&
+                      widget.startDate.compareTo(indexDate) <= 0 &&
                       indexDate.compareTo(_endDate) <= 0 &&
                       !_badDates.contains(indexDate) &&
                       !_pendingDates.contains(indexDate);
                   bool isBadDay = widget.startDate != null &&
-                      widget.startDate.compareTo(indexDate) < 0 &&
+                      widget.startDate.compareTo(indexDate) <= 0 &&
                       indexDate.compareTo(_endDate) <= 0 &&
                       _badDates.contains(indexDate);
                   bool isPendingDay = widget.startDate != null &&
-                      widget.startDate.compareTo(indexDate) < 0 &&
+                      widget.startDate.compareTo(indexDate) <= 0 &&
                       indexDate.compareTo(_endDate) <= 0 &&
                       _pendingDates.contains(indexDate);
 
