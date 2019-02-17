@@ -234,6 +234,7 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
   HashSet<DateTime> _pendingDates = new HashSet<DateTime>();
   HashSet<DateTime> _leftRoundedDates = new HashSet<DateTime>();
   HashSet<DateTime> _rightRoundedDates = new HashSet<DateTime>();
+  DateTime _startDate;
   DateTime _endDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   bool _onlyVerticalDayPadding = false;
@@ -269,6 +270,7 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
       _leftRoundedDates = widget.leftRoundedDates;
     if (widget.rightRoundedDates != null)
       _rightRoundedDates = widget.rightRoundedDates;
+    if (widget.startDate != null) _startDate = widget.startDate;
     if (widget.endDate != null) _endDate = widget.endDate;
     if (widget.onlyVerticalDayPadding != null)
       _onlyVerticalDayPadding = widget.onlyVerticalDayPadding;
@@ -279,8 +281,13 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
     setState(() => _badDates = badDates);
   }
 
-  updatePendingDates(pendingDates) {
+  updateAllHabitDates(startDate, endDate, pendingDates, badDates, leftRoundedDates, rightRoundedDates) {
+    setState(() => _startDate = startDate);
+    setState(() => _endDate = endDate);
     setState(() => _pendingDates = pendingDates);
+    setState(() => _badDates = badDates);
+    setState(() => _leftRoundedDates = leftRoundedDates);
+    setState(() => _rightRoundedDates = rightRoundedDates);
   }
 
   @override
@@ -432,17 +439,17 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
                   bool isNextMonthDay = index >=
                       (DateTime(year, month + 1, 0).day) + _startWeekday;
                   bool isThisMonthDay = !isPrevMonthDay && !isNextMonthDay;
-                  bool isGoodDay = widget.startDate != null &&
-                      widget.startDate.compareTo(indexDate) <= 0 &&
+                  bool isGoodDay = _startDate != null &&
+                      _startDate.compareTo(indexDate) <= 0 &&
                       indexDate.compareTo(_endDate) <= 0 &&
                       !_badDates.contains(indexDate) &&
                       !_pendingDates.contains(indexDate);
-                  bool isBadDay = widget.startDate != null &&
-                      widget.startDate.compareTo(indexDate) <= 0 &&
+                  bool isBadDay = _startDate != null &&
+                      _startDate.compareTo(indexDate) <= 0 &&
                       indexDate.compareTo(_endDate) <= 0 &&
                       _badDates.contains(indexDate);
-                  bool isPendingDay = widget.startDate != null &&
-                      widget.startDate.compareTo(indexDate) <= 0 &&
+                  bool isPendingDay = _startDate != null &&
+                      _startDate.compareTo(indexDate) <= 0 &&
                       indexDate.compareTo(_endDate) <= 0 &&
                       _pendingDates.contains(indexDate);
 
