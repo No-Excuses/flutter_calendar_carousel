@@ -265,7 +265,8 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
       _selectedDate = widget.selectedDateTime;
     if (widget.badDates != null) _badDates = widget.badDates;
     if (widget.pendingDates != null) _pendingDates = widget.pendingDates;
-    if (widget.leftRoundedDates != null) _leftRoundedDates = widget.leftRoundedDates;
+    if (widget.leftRoundedDates != null)
+      _leftRoundedDates = widget.leftRoundedDates;
     if (widget.rightRoundedDates != null)
       _rightRoundedDates = widget.rightRoundedDates;
     if (widget.endDate != null) _endDate = widget.endDate;
@@ -500,7 +501,9 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
                       padding: EdgeInsets.all(widget.dayPadding),
                       shape: widget.daysHaveCircularBorder == null
                           ? CircleBorder()
-                          : widget.daysHaveCircularBorder
+                          : widget.daysHaveCircularBorder ||
+                                  (_leftRoundedDates.contains(indexDate) &&
+                                      _rightRoundedDates.contains(indexDate))
                               ? CircleBorder(
                                   side: BorderSide(
                                     color: isSelectedDay
