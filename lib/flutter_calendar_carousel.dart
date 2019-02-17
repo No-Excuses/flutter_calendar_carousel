@@ -131,8 +131,8 @@ class CalendarCarousel<T> extends StatefulWidget {
   final Color pendingBorderColor;
   final HashSet<DateTime> badDates;
   final HashSet<DateTime> pendingDates;
-  final HashSet<DateTime> leftCurveDates;
-  final HashSet<DateTime> rightCurveDates;
+  final HashSet<DateTime> leftRoundedDates;
+  final HashSet<DateTime> rightRoundedDates;
   final DateTime startDate;
   final DateTime endDate;
   final bool onlyVerticalDayPadding;
@@ -202,8 +202,8 @@ class CalendarCarousel<T> extends StatefulWidget {
     this.pendingButtonColor = Colors.amber,
     this.badDates,
     this.pendingDates,
-    this.leftCurveDates,
-    this.rightCurveDates,
+    this.leftRoundedDates,
+    this.rightRoundedDates,
     this.startDate,
     this.endDate,
     this.onlyVerticalDayPadding,
@@ -232,8 +232,8 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
   DateFormat _localeDate;
   HashSet<DateTime> _badDates = new HashSet<DateTime>();
   HashSet<DateTime> _pendingDates = new HashSet<DateTime>();
-  HashSet<DateTime> _leftCurveDates = new HashSet<DateTime>();
-  HashSet<DateTime> _rightCurveDates = new HashSet<DateTime>();
+  HashSet<DateTime> _leftRoundedDates = new HashSet<DateTime>();
+  HashSet<DateTime> _rightRoundedDates = new HashSet<DateTime>();
   DateTime _endDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   bool _onlyVerticalDayPadding = false;
@@ -265,9 +265,9 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
       _selectedDate = widget.selectedDateTime;
     if (widget.badDates != null) _badDates = widget.badDates;
     if (widget.pendingDates != null) _pendingDates = widget.pendingDates;
-    if (widget.leftCurveDates != null) _leftCurveDates = widget.leftCurveDates;
-    if (widget.rightCurveDates != null)
-      _rightCurveDates = widget.rightCurveDates;
+    if (widget.leftRoundedDates != null) _leftRoundedDates = widget.leftRoundedDates;
+    if (widget.rightRoundedDates != null)
+      _rightRoundedDates = widget.rightRoundedDates;
     if (widget.endDate != null) _endDate = widget.endDate;
     if (widget.onlyVerticalDayPadding != null)
       _onlyVerticalDayPadding = widget.onlyVerticalDayPadding;
@@ -527,11 +527,11 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
                                   ),
                                 )
                               : RoundedRectangleBorder(
-                                  borderRadius: (_leftCurveDates
+                                  borderRadius: (_leftRoundedDates
                                           .contains(indexDate))
                                       ? BorderRadius.horizontal(
                                           left: Radius.circular(30))
-                                      : (_rightCurveDates.contains(indexDate))
+                                      : (_rightRoundedDates.contains(indexDate))
                                           ? BorderRadius.horizontal(
                                               right: Radius.circular(30))
                                           : BorderRadius.zero,

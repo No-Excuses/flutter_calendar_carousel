@@ -227,8 +227,8 @@ class _MyHomePageState extends State<MyHomePage> {
       key: _calendarKey2,
       daysHaveCircularBorder: false,
       onlyVerticalDayPadding: true,
-      leftCurveDates: new HashSet.from([DateTime(2019,1,12), DateTime(2019,1,19), DateTime(2019,1,26), DateTime(2019,2,2), DateTime(2019,2,9), DateTime(2019,2,16)]),
-      rightCurveDates: new HashSet.from([DateTime(2019,1,18), DateTime(2019,1,25), DateTime(2019,1,32), DateTime(2019,2,8), DateTime(2019,2,15), DateTime(2019,2,22)]),
+      leftRoundedDates: new HashSet.from([DateTime(2019,1,12), DateTime(2019,1,19), DateTime(2019,1,26), DateTime(2019,2,2), DateTime(2019,2,9), DateTime(2019,2,16)]),
+      rightRoundedDates: new HashSet.from([DateTime(2019,1,18), DateTime(2019,1,25), DateTime(2019,1,32), DateTime(2019,2,8), DateTime(2019,2,15), DateTime(2019,2,22)]),
     );
 
     return new Scaffold(
