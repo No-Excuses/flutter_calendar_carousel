@@ -290,6 +290,12 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
     setState(() => _badDates = badDates);
   }
 
+  updateStatusDates(goodDates, pendingDates, badDates) {
+    setState(() => _goodDates = goodDates);
+    setState(() => _pendingDates = pendingDates);
+    setState(() => _badDates = badDates);
+  }
+
   updateAllHabitDates(startDate, endDate, goodDates, pendingDates, badDates, leftRoundedDates, rightRoundedDates) {
     setState(() => _startDate = startDate);
     setState(() => _endDate = endDate);
