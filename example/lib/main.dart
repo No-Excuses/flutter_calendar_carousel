@@ -220,13 +220,15 @@ class _MyHomePageState extends State<MyHomePage> {
       markedDateIconBuilder: (event) {
         return event.icon;
       },
-      startDate: new DateTime(2019,1,11),
-      badDates: new HashSet.from([DateTime(2019,1,15)]),
+      startDate: new DateTime(2019,2,2),
+      goodDates: new HashSet.from([DateTime(2019,2,2), DateTime(2019,2,3), DateTime(2019,2,4), DateTime(2019,2,5), DateTime(2019,2,6), DateTime(2019,2,7), DateTime(2019,2,8)]),
+      badDates: new HashSet.from([DateTime(2019,2,9), DateTime(2019,2,10), DateTime(2019,2,11), DateTime(2019,2,12), DateTime(2019,2,13), DateTime(2019,2,14), DateTime(2019,2,15)]),
       pendingDates: new HashSet.from([DateTime(2019,2,16), DateTime(2019,2,17), DateTime(2019,2,18), DateTime(2019,2,19), DateTime(2019,2,20), DateTime(2019,2,21), DateTime(2019,2,22)]),
       endDate: new DateTime(2019,2,22),
       key: _calendarKey2,
       daysHaveCircularBorder: false,
       onlyVerticalDayPadding: true,
+      explicitGoodDates: true,
       leftRoundedDates: new HashSet.from([DateTime(2019,1,12), DateTime(2019,1,19), DateTime(2019,1,26), DateTime(2019,2,2), DateTime(2019,2,9), DateTime(2019,2,16)]),
       rightRoundedDates: new HashSet.from([DateTime(2019,1,18), DateTime(2019,1,25), DateTime(2019,1,32), DateTime(2019,2,8), DateTime(2019,2,15), DateTime(2019,2,22)]),
     );
