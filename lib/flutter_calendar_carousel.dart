@@ -244,6 +244,7 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   bool _explicitGoodDates = false;
   bool _onlyVerticalDayPadding = false;
+  EventList<T> _markedDatesMap;
 
   /// When FIRSTDAYOFWEEK is 0 in dart-intl, it represents Monday. However it is the second day in the arrays of Weekdays.
   /// Therefore we need to add 1 modulo 7 to pick the right weekday from intl. (cf. [GlobalMaterialLocalizations])
@@ -294,6 +295,10 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
     setState(() => _goodDates = goodDates);
     setState(() => _pendingDates = pendingDates);
     setState(() => _badDates = badDates);
+  }
+
+  updateMarkedDateMap(markedDateMap) {
+    setState(() => _markedDatesMap = markedDateMap);
   }
 
   updateAllHabitDates(startDate, endDate, goodDates, pendingDates, badDates, leftRoundedDates, rightRoundedDates) {
@@ -643,7 +648,7 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
                               ),
                             ),
                           ),
-                          widget.markedDatesMap != null
+                          _markedDatesMap != null
                               ? _renderMarkedMapContainer(now)
                               : _renderMarked(now),
                         ],
@@ -855,8 +860,8 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
     if (widget.onDayPressed != null)
       widget.onDayPressed(
           picked,
-          widget.markedDatesMap != null
-              ? widget.markedDatesMap.getEvents(picked)
+          _markedDatesMap != null
+              ? _markedDatesMap.getEvents(picked)
               : []);
     _setDate();
   }
@@ -882,8 +887,8 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
       if (widget.onDayPressed != null)
         widget.onDayPressed(
             selected,
-            widget.markedDatesMap != null
-                ? widget.markedDatesMap.getEvents(selected)
+            _markedDatesMap != null
+                ? _markedDatesMap.getEvents(selected)
                 : []);
       _setDate();
     }
@@ -1089,13 +1094,13 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
   }
 
   List<Widget> _renderMarkedMap(DateTime now) {
-    if (widget.markedDatesMap != null &&
-        widget.markedDatesMap.getEvents(now).length > 0) {
+    if (_markedDatesMap != null &&
+        _markedDatesMap.getEvents(now).length > 0) {
       List<Widget> tmp = [];
       int count = 0;
       double offset = 0.0;
       double padding = widget.markedDateIconMargin;
-      widget.markedDatesMap.getEvents(now).forEach((event) {
+      _markedDatesMap.getEvents(now).forEach((event) {
         if (widget.markedDateShowIcon) {
           if (tmp.length > 0 && tmp.length < widget.markedDateIconMaxShown) {
             offset += widget.markedDateIconOffset;
