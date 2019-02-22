@@ -297,8 +297,8 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
     setState(() => _badDates = badDates);
   }
 
-  updateMarkedDateMap(markedDateMap) {
-    setState(() => _markedDatesMap = markedDateMap);
+  updateMarkedDatesMap(markedDatesMap) {
+    setState(() => _markedDatesMap = markedDatesMap);
   }
 
   updateAllHabitDates(startDate, endDate, goodDates, pendingDates, badDates, leftRoundedDates, rightRoundedDates) {
