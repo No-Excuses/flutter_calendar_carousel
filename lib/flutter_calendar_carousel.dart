@@ -284,6 +284,8 @@ class CalendarState<T> extends State<CalendarCarousel<T>> {
       _explicitGoodDates = widget.explicitGoodDates;
     if (widget.onlyVerticalDayPadding != null)
       _onlyVerticalDayPadding = widget.onlyVerticalDayPadding;
+    if (widget.markedDatesMap != null)
+      _markedDatesMap = widget.markedDatesMap;
     _setDate();
   }
 
