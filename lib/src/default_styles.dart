@@ -40,6 +40,14 @@ final TextStyle defaultInactiveWeekendTextStyle = TextStyle(
 	color: Colors.pinkAccent.withOpacity(0.6),
 	fontSize: 14.0,
 );
+final TextStyle defaultGoodTextStyle = TextStyle(
+	fontSize: 20.0,
+	color: Colors.white,
+);
+final TextStyle defaultBadTextStyle = TextStyle(
+	fontSize: 20.0,
+	color: Colors.white,
+);
 final Widget defaultMarkedDateWidget = Container(
 	margin: EdgeInsets.symmetric(horizontal: 1.0),
 	color: Colors.blueAccent,

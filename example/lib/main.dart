@@ -1,7 +1,7 @@
+import 'dart:collection';
 import 'package:flutter/material.dart';
 
-import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart'
-    show CalendarCarousel;
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import 'package:flutter_calendar_carousel/classes/event.dart';
 import 'package:flutter_calendar_carousel/classes/event_list.dart';
 import 'package:intl/intl.dart' show DateFormat;
@@ -92,7 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
     },
   );
 
-  CalendarCarousel _calendarCarousel, _calendarCarouselNoHeader;
+  CalendarCarousel _calendarCarousel, _calendarCarouselNoHeader, _calendarCarouselGroupedDates;
+  final GlobalKey<CalendarState> _calendarKey = new GlobalKey<CalendarState>();
+  final GlobalKey<CalendarState> _calendarKey2 = new GlobalKey<CalendarState>();
 
   @override
   void initState() {
@@ -193,21 +195,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
     /// Example Calendar Carousel without header and custom prev & next button
     _calendarCarouselNoHeader = CalendarCarousel<Event>(
-      todayBorderColor: Colors.green,
       onDayPressed: (DateTime date, List<Event> events) {
         this.setState(() => _currentDate2 = date);
         events.forEach((event) => print(event.title));
       },
-      daysHaveCircularBorder: true,
-      weekendTextStyle: TextStyle(
-        color: Colors.red,
-      ),
+      weekendTextStyle: TextStyle(color: Colors.black),
       thisMonthDayBorderColor: Colors.grey,
       weekFormat: false,
-      markedDatesMap: _markedDateMap,
-      height: 420.0,
-      selectedDateTime: _currentDate2,
       customGridViewPhysics: NeverScrollableScrollPhysics(),
+      height: MediaQuery.of(context).size.width * 1.12,
+      width: MediaQuery.of(context).size.width,
+      weekdayTextStyle: TextStyle(
+        color: Color(0xff3d9970),
+        fontWeight: FontWeight.bold,
+      ),
+      daysHaveCircularBorder: true,
+      todayButtonColor: null,
+      todayBorderColor: null,
+      todayTextStyle: TextStyle(color: Colors.black),
+      selectedDateTime: _currentDate2,
+      markedDatesMap: _markedDateMap,
       markedDateCustomShapeBorder: CircleBorder(
         side: BorderSide(color: Colors.yellow)
       ),
@@ -221,15 +228,9 @@ class _MyHomePageState extends State<MyHomePage> {
       //     color: Colors.blue,
       //   );
       // },
-      todayTextStyle: TextStyle(
-        color: Colors.blue,
-      ),
-      todayButtonColor: Colors.yellow,
       selectedDayTextStyle: TextStyle(
         color: Colors.yellow,
       ),
-      minSelectedDate: _currentDate.subtract(Duration(days: 360)),
-      maxSelectedDate: _currentDate.add(Duration(days: 360)),
       prevDaysTextStyle: TextStyle(
         fontSize: 16,
         color: Colors.pinkAccent,
@@ -238,12 +239,50 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.tealAccent,
         fontSize: 16,
       ),
-      onCalendarChanged: (DateTime date) {
-        this.setState(() => _currentMonth = DateFormat.yMMM().format(date));
-      },
       onDayLongPressed: (DateTime date) {
         print('long pressed date $date');
       },
+      startDate: new DateTime(2019,1,11),
+      badDates: new HashSet.from([DateTime(2019,1,15)]),
+      endDate: new DateTime(2019,2,18),
+      key: _calendarKey,
+    );
+
+    _calendarCarouselGroupedDates = CalendarCarousel<Event>(
+      onDayPressed: (DateTime date, List<Event> events) {
+        this.setState(() => _currentDate2 = date);
+      },
+      weekendTextStyle: TextStyle(color: Colors.black),
+      weekFormat: false,
+      customGridViewPhysics: NeverScrollableScrollPhysics(),
+      height: MediaQuery.of(context).size.width * 1.12,
+      width: MediaQuery.of(context).size.width,
+      weekdayTextStyle: TextStyle(
+        color: Color(0xff3d9970),
+        fontWeight: FontWeight.bold,
+      ),
+      todayButtonColor: null,
+      todayBorderColor: null,
+      todayTextStyle: TextStyle(color: Colors.black),
+      markedDatesMap: _markedDateMap,
+      markedDateShowIcon: true,
+      markedDateIconMaxShown: 2,
+      markedDateMoreShowTotal:
+      false, // null for not showing hidden events indicator
+      markedDateIconBuilder: (event) {
+        return event.icon;
+      },
+      startDate: new DateTime(2019,2,2),
+      goodDates: new HashSet.from([DateTime(2019,2,2), DateTime(2019,2,3), DateTime(2019,2,4), DateTime(2019,2,5), DateTime(2019,2,6), DateTime(2019,2,7), DateTime(2019,2,8)]),
+      badDates: new HashSet.from([DateTime(2019,2,9), DateTime(2019,2,10), DateTime(2019,2,11), DateTime(2019,2,12), DateTime(2019,2,13), DateTime(2019,2,14), DateTime(2019,2,15)]),
+      pendingDates: new HashSet.from([DateTime(2019,2,16), DateTime(2019,2,17), DateTime(2019,2,18), DateTime(2019,2,19), DateTime(2019,2,20), DateTime(2019,2,21), DateTime(2019,2,22)]),
+      endDate: new DateTime(2019,2,22),
+      key: _calendarKey2,
+      daysHaveCircularBorder: false,
+      onlyVerticalDayPadding: true,
+      explicitGoodDates: true,
+      leftRoundedDates: new HashSet.from([DateTime(2019,1,12), DateTime(2019,1,19), DateTime(2019,1,26), DateTime(2019,2,2), DateTime(2019,2,9), DateTime(2019,2,16)]),
+      rightRoundedDates: new HashSet.from([DateTime(2019,1,18), DateTime(2019,1,25), DateTime(2019,1,32), DateTime(2019,2,8), DateTime(2019,2,15), DateTime(2019,2,22)]),
     );
 
     return new Scaffold(
@@ -305,7 +344,11 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 16.0),
                 child: _calendarCarouselNoHeader,
-              ), //
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 16.0),
+                child: _calendarCarouselGroupedDates,
+              ),
             ],
           ),
         ));
